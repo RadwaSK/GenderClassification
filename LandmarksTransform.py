@@ -20,11 +20,13 @@ class LandmarksTransform(object):
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         boxes, probs = mtcnn.detect(frame)
         face = mtcnn.extract(frame, boxes, save_path=None)
-        face = face.permute(1, 2, 0).numpy()
-        face = cv2.cvtColor(face, cv2.COLOR_RGB2BGR)
-        face = face.astype(np.uint8)
-        frame = frame_transform(face)
+        if face is not None:
+            face = face.permute(1, 2, 0).numpy()
+            face = cv2.cvtColor(face, cv2.COLOR_RGB2BGR)
+            face = face.astype(np.uint8)
+            frame = frame_transform(face)
+        else:
+            frame = frame_transform(frame)
         assert frame.shape == (3, 224, 224)
-
         return frame.float()
 
