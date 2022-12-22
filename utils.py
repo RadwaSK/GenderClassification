@@ -4,15 +4,15 @@ import torchvision
 from LandmarksTransform import LandmarksTransform
 
 
-def get_t_v_dataloaders(batch_size, train_csv, val_csv):
+def get_t_v_dataloaders(batch_size, train_csv, val_csv, train_ratio=None, val_ratio=None):
     transform = torchvision.transforms.Compose([LandmarksTransform()])
-    train_dataset = DAiSEE_Dataset(train_csv, transform)
-    val_dataset = DAiSEE_Dataset(val_csv, transform)
+    train_dataset = DAiSEE_Dataset(train_csv, train_ratio, transform)
+    val_dataset = DAiSEE_Dataset(val_csv, val_ratio, transform)
     return {'train': DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4, drop_last=True),
             'validation': DataLoader(val_dataset, batch_size=batch_size, shuffle=True, num_workers=4, drop_last=True)}
 
 
-def get_test_dataloader(batch_size, test_csv, transform):
+def get_test_dataloader(batch_size, test_csv):
     transform = torchvision.transforms.Compose([LandmarksTransform()])
     test_dataset = DAiSEE_Dataset(test_csv, transform)
     return DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4)

@@ -25,6 +25,8 @@ parser.add_argument('-m', '--model_name', type=str, default='saved_models', help
 parser.add_argument('-rn', '--run_name', type=str, required=True, help='Enter run name for folders and models')
 parser.add_argument('-r', '--run_num', type=int, default=len(os.listdir('saved_models')), help='Trial Run Number')
 parser.add_argument('-o', '--optim', type=str, default='SGD', help='Which Optim to use, "Adam" or "SGD')
+parser.add_argument('-tr', '--train_ratio', type=float, default=None, help='ratio to take from training dataset')
+parser.add_argument('-vr', '--val_ratio', type=float, default=None, help='ratio to take from validation dataset')
 
 opt = vars(parser.parse_args())
 
@@ -36,7 +38,7 @@ print('\n======================================================================\
 train_path = join(opt['labels_path'], 'train.csv')
 val_path = join(opt['labels_path'], 'val.csv')
 
-datasets = get_t_v_dataloaders(opt['batch_size'], train_path, val_path)
+datasets = get_t_v_dataloaders(opt['batch_size'], train_path, val_path, opt['train_ratio'], opt['val_ratio'])
 dataset_sizes = {x: len(datasets[x].dataset) for x in ['train', 'validation']}
 
 torch.manual_seed(0)
@@ -78,7 +80,7 @@ val_f1 = []
 train_acc = []
 val_acc = []
 
-tolerance = 10
+tolerance = 5
 min_delta = 0.5
 early_stopping = EarlyStopping(tolerance=tolerance, min_delta=min_delta)
 finish = False
