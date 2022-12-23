@@ -21,8 +21,6 @@ opt = parser.parse_args()
 
 test_csv = join(opt.labels_path, opt.test_csv_path)
 
-test_path = join(opt.data_path, 'Test_frames')
-
 dataloader = get_test_dataloader(opt.batch_size, test_csv)
 
 torch.manual_seed(0)

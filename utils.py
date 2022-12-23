@@ -12,9 +12,9 @@ def get_t_v_dataloaders(batch_size, train_csv, val_csv, train_ratio=None, val_ra
             'validation': DataLoader(val_dataset, batch_size=batch_size, shuffle=True, num_workers=4, drop_last=True)}
 
 
-def get_test_dataloader(batch_size, test_csv):
+def get_test_dataloader(batch_size, test_csv, ratio=None):
     transform = torchvision.transforms.Compose([LandmarksTransform()])
-    test_dataset = DAiSEE_Dataset(test_csv, transform)
+    test_dataset = DAiSEE_Dataset(test_csv, ratio, transform)
     return DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
 
 
