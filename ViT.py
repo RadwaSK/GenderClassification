@@ -8,7 +8,7 @@ class ViT(nn.Module):
 
         self.CUDA = CUDA
 
-        self.model = timm.create_model("vit_base_patch16_224", pretrained=pretrained_ViT)
+        self.model = timm.create_model("vit_base_patch32_224", pretrained=pretrained_ViT)
         self.linear_fc_layer1 = nn.Linear(1000, 100)
         self.linear_fc_layer2 = nn.Linear(100, 1)
         self.sigmoid = nn.Sigmoid()

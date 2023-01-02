@@ -50,7 +50,6 @@ for inputs, labels in dataloader:
     outputs = model(inputs).squeeze()
 
     preds = outputs.reshape(-1).detach().cpu().numpy().round()
-    print(preds)
     y_trues = np.append(y_trues, labels.data.cpu().numpy())
     y_preds = np.append(y_preds, preds)
 

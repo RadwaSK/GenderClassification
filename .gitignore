@@ -1,3 +1,7 @@
+*.txt
+dataset/
+test/
+**/*.jpg
 plots/
 saved_models/
 trials/
